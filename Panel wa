@@ -1,0 +1,32 @@
+(msg.body.toLowerCase()) {
+                case "hoax":
+                    resetSpam(kontak);
+                    penggunaAksi.set(kontak.number + "_mode", "hoax");
+                    penggunaAksi.set(kontak.number + "_hoax", 0);
+                    msg.reply("Anda memasuki mode automasi Informasi Klarifikasi hoax terbaru, Berita sedang dimuat..." + stop);
+                    getHoax(msg, kontak.number);
+                    break;
+                case "sembuh":
+                    resetSpam(kontak);
+                    request("https://api.kawalcorona.com/sembuh/", { json: true }, (err, res, body) => {
+                        if (err) {
+                            msg.reply("Mohon maaf, sepertinya terjadi sesuatu, sistem gagal memuat data" + stop);
+                            return console.log(err);
+                        }
+                        msg.reply("Pasien Covid19 yang dinyatakan sembuh diseluruh dunia sebanyak " + body.value + " orang" + stop);
+                    });
+                    break;
+                case "positif":
+                    resetSpam(kontak);
+                    request("https://api.kawalcorona.com/positif/", { json: true }, (err, res, body) => {
+                        if (err) {
+                            msg.reply("Mohon maaf, sepertinya terjadi sesuatu, sistem gagal memuat data" + stop);
+                            return console.log(err);
+                        }
+                        msg.reply("Pasien Covid19 yang dinyatakan positif diseluruh dunia sebanyak " + body.value + " orang" + stop);
+                    });
+                    break;
+                case "meninggal":
+                    resetSpam(kontak);
+                    request("https://api.kawalcorona.com/meninggal/", { json: true }, (err, res, body) => {
+   
